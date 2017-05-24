@@ -103,7 +103,8 @@ public class sBola extends View {
     private Boolean primeiraVez = true;
     private LinkedList<Coordinate> linhas1;
     private LinkedList<Coordinate> linhas2;
-    private static float DELTA_Y = 2;
+    private static float DELTA_Y = 30;
+    private static float MAX_DELTA_X = 4 * DELTA_Y;
 
     public sBola(Context context, AttributeSet attrs, float xs, float ys)
     {
@@ -139,10 +140,10 @@ public class sBola extends View {
         linhas1 = new LinkedList<>();
         linhas2 = new LinkedList<>();
 
-        linhas1.add(new Coordinate(xInMap1, yInMap1));
-        linhas2.add(new Coordinate(xInMap2, yInMap2));
-        linhas1.add(new Coordinate(xFinMap1, yFinMap1));
-        linhas2.add(new Coordinate(xFinMap2, yFinMap2));
+        linhas1.addFirst(new Coordinate(xInMap1, yInMap1));
+        linhas2.addFirst(new Coordinate(xInMap2, yInMap2));
+        linhas1.addFirst(new Coordinate(xFinMap1, yFinMap1));
+        linhas2.addFirst(new Coordinate(xFinMap2, yFinMap2));
 
     }
 
@@ -179,21 +180,21 @@ public class sBola extends View {
     private void generatePoints() {
             for (Coordinate g:
                     linhas1){
-                g.y += DELTA_Y;
+                g.y += 6;
             }
 
             for (Coordinate g:
                     linhas2){
-                g.y += DELTA_Y;
+                g.y += 6;
             }
 
-        float deltaX = random.nextInt((int) (2 * DELTA_Y)) - DELTA_Y;
+        float deltaX = random.nextInt((int) MAX_DELTA_X) - MAX_DELTA_X/2 + 11/MAX_DELTA_X ;
 
         Coordinate cn1 = new Coordinate(linhas1.getFirst().x + deltaX, linhas1.getFirst().y - DELTA_Y);
         Coordinate cn2 = new Coordinate(linhas2.getFirst().x + deltaX, linhas2.getFirst().y - DELTA_Y);
 
-        linhas1.add(cn1);
-        linhas2.add(cn2);
+        linhas1.addFirst(cn1);
+        linhas2.addFirst(cn2);
 
         if (linhas1.getLast().y > yInMap1) {
             linhas1.removeLast();

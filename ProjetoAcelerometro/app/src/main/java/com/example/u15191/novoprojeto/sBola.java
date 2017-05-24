@@ -8,6 +8,9 @@ import android.graphics.Path;
 import android.util.AttributeSet;
 import android.view.View;
 
+import org.locationtech.jts.geom.Coordinate;
+
+import java.util.LinkedList;
 import java.util.Random;
 
 /**
@@ -98,6 +101,9 @@ public class sBola extends View {
     private Path path   = new Path();
     private Random random = new Random();
     private Boolean primeiraVez = true;
+    private LinkedList<Coordinate> linhas1;
+    private LinkedList<Coordinate> linhas2;
+    private static float DELTA_Y = 2;
 
     public sBola(Context context, AttributeSet attrs, float xs, float ys)
     {
@@ -106,14 +112,6 @@ public class sBola extends View {
         x = xs;
         y = ys;
         z =  65;
-
-
-        paint.setAntiAlias(true);
-        paint.setStrokeWidth(6f);
-        paint.setTextSize(30);
-        paint.setColor(Color.RED);
-        paint.setStyle(Paint.Style.FILL);
-        paint.setStrokeJoin(Paint.Join.ROUND);
 
         this.setxInMap1(370);
         this.setyInMap1(1700);
@@ -125,46 +123,38 @@ public class sBola extends View {
         this.setyFinMap2(-200);
 
 
+        paint.setAntiAlias(true);
+        paint.setStrokeWidth(6f);
+        paint.setTextSize(30);
+        paint.setColor(Color.RED);
+        paint.setStyle(Paint.Style.FILL);
+        paint.setStrokeJoin(Paint.Join.ROUND);
+
         paint2.setAntiAlias(true);
         paint2.setStrokeWidth(20f);
         paint2.setColor(Color.BLUE);
         paint2.setStyle(Paint.Style.FILL);
         paint2.setStrokeJoin(Paint.Join.ROUND);
 
+        linhas1 = new LinkedList<>();
+        linhas2 = new LinkedList<>();
+
+        linhas1.add(new Coordinate(xInMap1, yInMap1));
+        linhas2.add(new Coordinate(xInMap2, yInMap2));
+        linhas1.add(new Coordinate(xFinMap1, yFinMap1));
+        linhas2.add(new Coordinate(xFinMap2, yFinMap2));
 
     }
 
     @Override
     protected void onDraw(Canvas canvas)
     {
-        if(z >= 0)
-        {
-            canvas.drawCircle(x,y,65,paint);
-            canvas.drawText("x: "+this.getXBolinha()+"  y: "+this.getYBolinha(),160,100,paint);
-//            int i = 0;
-//            do{
-                canvas.drawLine(this.xInMap1 , this.yInMap1,this.xFinMap1, this.yFinMap1, paint2);
-                canvas.drawLine(this.xInMap2 , this.yInMap2,this.xFinMap2, this.yFinMap2, paint2);
-//                i++;
-//                this.xInMap1 = this.xFinMap1;
-//                this.xInMap2 = this.xFinMap2;
-//                this.yInMap1  = this.yFinMap1;
-//                this.xFinMap1 = random.nextInt(100);
-//                this.xFinMap2 = this.xFinMap1 + 350;
-//                this.yFinMap1 = this.yInMap1 + 350;
-//
-//            }while(i<2);
-
-
+        if(z >= 0) {
+            canvas.drawCircle(x, y, 65, paint);
+            canvas.drawText("x: " + this.getXBolinha() + "  y: " + this.getYBolinha(), 160, 100, paint);
+            generatePoints();
+            desenharLinha(canvas);
         }
-//        if(primeiraVez)
-//        {
-//            drawMap(canvas);
-//            primeiraVez = false;
-//        }
-
-
-
     }
 
     public void setXBolinha(float novox)
@@ -186,35 +176,52 @@ public class sBola extends View {
         return y;
     }
 
+    private void generatePoints() {
+            for (Coordinate g:
+                    linhas1){
+                g.y += DELTA_Y;
+            }
 
+            for (Coordinate g:
+                    linhas2){
+                g.y += DELTA_Y;
+            }
 
+        float deltaX = random.nextInt((int) (2 * DELTA_Y)) - DELTA_Y;
 
-    protected void drawMap(Canvas canvas)
-    {
-//        int i=0;
-//        int xin1 = 200;
-//        int xin2 = 400;
-//        int yin = 1380;
-//
-//        int xfin1 = 200;
-//        int xfin2 = 400;
-//        int yfin  =-200;
-//
-//        canvas.drawLine(xin1,yin,xfin1,yfin,paint2);
-//        canvas.drawLine(xin2,yin,xfin2,yfin,paint2);
+        Coordinate cn1 = new Coordinate(linhas1.getFirst().x + deltaX, linhas1.getFirst().y - DELTA_Y);
+        Coordinate cn2 = new Coordinate(linhas2.getFirst().x + deltaX, linhas2.getFirst().y - DELTA_Y);
 
-//        do {
-//            canvas.drawLine(xin1,yin,xfin1,yfin,paint2);
-//            canvas.drawLine(xin2,yin,xfin2,yfin,paint2);
-//            xin1 = xfin1;
-//            xin2 = xfin2;
-//            yin  = yfin;
-//            xfin1 = random.nextInt(100);
-//            xfin2 = xfin1 + 200;
-//            yfin = yin + 200;
-//        }while(i<20);
+        linhas1.add(cn1);
+        linhas2.add(cn2);
 
+        if (linhas1.getLast().y > yInMap1) {
+            linhas1.removeLast();
+            linhas2.removeLast();
+        }
     }
 
+    private void desenharLinha(Canvas c){
+            Coordinate g = null;
+            for (Coordinate h:
+                    linhas1){
+                if (g == null){
+                    g = h;
+                    continue;
+                }
+                c.drawLine(((float) g.x), ((float) g.y), ((float) h.x), ((float) h.y), paint2);
+                g = h;
+            }
 
+        g = null;
+            for (Coordinate h:
+                    linhas2){
+                if (g == null){
+                    g = h;
+                    continue;
+                }
+                c.drawLine(((float) g.x), ((float) g.y), ((float) h.x), ((float) h.y), paint2);
+                g = h;
+        }
+    }
 }

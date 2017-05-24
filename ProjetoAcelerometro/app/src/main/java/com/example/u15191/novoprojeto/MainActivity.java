@@ -73,10 +73,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
             bolinha.setXBolinha(bolinha.getXBolinha()-5*velX);
             bolinha.setYBolinha(bolinha.getYBolinha()+5*velY);
-            bolinha.setyInMap1(bolinha.getyInMap1() + 4);
-            bolinha.setyFinMap1(bolinha.getyFinMap1() + 4);
-            bolinha.setyInMap2(bolinha.getyInMap2() + 4);
-            bolinha.setyFinMap2(bolinha.getyFinMap2() + 4);
+
+//            bolinha.setyInMap1(bolinha.getyInMap1() + 2);
+//            bolinha.setyFinMap1(bolinha.getyFinMap1() + 2);
+//            bolinha.setyInMap2(bolinha.getyInMap2() + 2);
+//            bolinha.setyFinMap2(bolinha.getyFinMap2() + 2);
 
             if(bolinha.getXBolinha() > 66 && bolinha.getYBolinha() > 66 && bolinha.getXBolinha() <1011 && bolinha.getYBolinha() <1467)
             {

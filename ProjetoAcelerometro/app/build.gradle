@@ -19,7 +19,13 @@ android {
     }
 }
 
+repositories{
+    maven { url "https://repo.locationtech.org/content/groups/releases" }
+    maven { url "https://repo.locationtech.org/content/repositories/jts-snapshots" }
+}
+
 dependencies {
+    compile group: 'org.locationtech.jts', name: 'jts-core', version: '1.15.0-SNAPSHOT'
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'

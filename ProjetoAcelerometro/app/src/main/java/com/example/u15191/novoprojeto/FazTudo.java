@@ -10,12 +10,9 @@ import android.view.View;
 
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.CoordinateFilter;
-<<<<<<< HEAD
-=======
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.LineString;
->>>>>>> Morrrrreu
 import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.util.GeometricShapeFactory;
 
@@ -149,10 +146,7 @@ public class FazTudo extends View {
         super(context, attrs);
         bola = createCircle(xs, ys, 65);
 
-<<<<<<< HEAD
-=======
         gesao = new GeometryFactory();
->>>>>>> Morrrrreu
 
         this.setxInMap1(370);
         this.setyInMap1(1700);

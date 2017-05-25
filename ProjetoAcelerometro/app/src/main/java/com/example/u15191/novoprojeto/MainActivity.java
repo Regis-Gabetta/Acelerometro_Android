@@ -69,7 +69,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             velX = event.values[0];
             velY = event.values[1];
             float z = 45;
-
             fazTudo.translateBola((-5) * velX, 5 * velY);
 
             if (fazTudo.isColidiu())

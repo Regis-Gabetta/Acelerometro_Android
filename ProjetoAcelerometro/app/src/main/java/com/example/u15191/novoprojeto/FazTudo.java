@@ -119,9 +119,11 @@ public class FazTudo extends View {
     public float yInMap2;
     public float yFinMap2;
     public float xFinMap2;
+    private int score = 0;
 
     private Paint paint = new Paint();
     private Paint paint2 = new Paint();
+    private Paint paint3 = new Paint();
     private Path path = new Path();
     private Random random = new Random();
     private Boolean primeiraVez = true;
@@ -169,6 +171,13 @@ public class FazTudo extends View {
         paint.setStyle(Paint.Style.FILL);
         paint.setStrokeJoin(Paint.Join.ROUND);
 
+        paint3.setAntiAlias(true);
+        paint3.setStrokeWidth(6f);
+        paint3.setTextSize(60);
+        paint3.setColor(Color.MAGENTA);
+        paint3.setStyle(Paint.Style.FILL);
+        paint3.setStrokeJoin(Paint.Join.ROUND);
+
         paint2.setAntiAlias(true);
         paint2.setStrokeWidth(20f);
         paint2.setColor(Color.BLUE);
@@ -196,7 +205,8 @@ public class FazTudo extends View {
                 bola_x,
                 bola_y,
                 65, paint);
-        canvas.drawText("x: " + bola_x + "  y: " + bola_y, 160, 100, paint);
+        score ++;
+        canvas.drawText("Score: " + score, 750, 100, paint3);
         generatePoints();
         desenharLinha(canvas);
     }

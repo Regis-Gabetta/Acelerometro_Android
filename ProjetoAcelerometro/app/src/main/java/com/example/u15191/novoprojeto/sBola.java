@@ -193,6 +193,19 @@ public class sBola extends View {
         Coordinate cn1 = new Coordinate(linhas1.getFirst().x + deltaX, linhas1.getFirst().y - DELTA_Y);
         Coordinate cn2 = new Coordinate(linhas2.getFirst().x + deltaX, linhas2.getFirst().y - DELTA_Y);
 
+        if(cn1.x < 66 )
+        {
+            deltaX = random.nextInt((int) MAX_DELTA_X)/2 ;
+        }
+
+        if(cn2.x > 1010)
+        {
+            deltaX = -1 * random.nextInt((int) MAX_DELTA_X)/2;
+        }
+
+        cn1 = new Coordinate(linhas1.getFirst().x + deltaX, linhas1.getFirst().y - DELTA_Y);
+        cn2 = new Coordinate(linhas2.getFirst().x + deltaX, linhas2.getFirst().y - DELTA_Y);
+
         linhas1.addFirst(cn1);
         linhas2.addFirst(cn2);
 

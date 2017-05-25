@@ -8,11 +8,8 @@ import android.graphics.Path;
 import android.util.AttributeSet;
 import android.view.View;
 
-import org.locationtech.jts.awt.PointShapeFactory;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.CoordinateFilter;
-import org.locationtech.jts.geom.Geometry;
-import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.util.GeometricShapeFactory;
 
@@ -23,7 +20,9 @@ import java.util.Random;
  * Created by u15191 on 26/04/2017.
  */
 
+
 public class FazTudo extends View {
+
 
     public float getxInMap1() {
         return xInMap1;
@@ -98,11 +97,11 @@ public class FazTudo extends View {
         });
     }
 
-    public double getXBola(){
+    public double getXBola() {
         return bola.getCentroid().getX();
     }
 
-    public double getYBola(){
+    public double getYBola() {
         return bola.getCentroid().getY();
     }
 
@@ -141,6 +140,7 @@ public class FazTudo extends View {
         super(context, attrs);
         bola = createCircle(xs, ys, 65);
 
+
         this.setxInMap1(370);
         this.setyInMap1(1700);
         this.setxFinMap1(370);
@@ -171,6 +171,7 @@ public class FazTudo extends View {
         linhas2.addFirst(new Coordinate(xInMap2, yInMap2));
         linhas1.addFirst(new Coordinate(xFinMap1, yFinMap1));
         linhas2.addFirst(new Coordinate(xFinMap2, yFinMap2));
+        this.invalidate();
 
     }
 
@@ -178,6 +179,7 @@ public class FazTudo extends View {
     protected void onDraw(Canvas canvas) {
         float bola_x = (float) bola.getCentroid().getX();
         float bola_y = (float) bola.getCentroid().getY();
+
 
         canvas.drawCircle(
                 bola_x,
@@ -201,24 +203,22 @@ public class FazTudo extends View {
 
         float deltaX = random.nextInt((int) MAX_DELTA_X) - MAX_DELTA_X / 2 + 11 / MAX_DELTA_X;
 
-        Coordinate cn1 = new Coordinate(linhas1.getFirst().x + deltaX, linhas1.getFirst().y - DELTA_Y);
-        Coordinate cn2 = new Coordinate(linhas2.getFirst().x + deltaX, linhas2.getFirst().y - DELTA_Y);
 
-        if (cn1.x < 66) {
+        if ((linhas1.getFirst().x + deltaX) < 66) {
             deltaX = random.nextInt((int) MAX_DELTA_X) / 2;
         }
 
-        if (cn2.x > 1010) {
+        if ((linhas2.getFirst().x + deltaX) > 1010) {
             deltaX = -1 * random.nextInt((int) MAX_DELTA_X) / 2;
         }
 
-        cn1 = new Coordinate(linhas1.getFirst().x + deltaX, linhas1.getFirst().y - DELTA_Y);
-        cn2 = new Coordinate(linhas2.getFirst().x + deltaX, linhas2.getFirst().y - DELTA_Y);
+        Coordinate cn1 = new Coordinate(linhas1.getFirst().x + deltaX, linhas1.getFirst().y - DELTA_Y);
+        Coordinate cn2 = new Coordinate(linhas2.getFirst().x + deltaX, linhas2.getFirst().y - DELTA_Y);
 
         linhas1.addFirst(cn1);
         linhas2.addFirst(cn2);
 
-        if (linhas1.getLast().y > yInMap1) {
+        if (linhas1.getFirst().y > yInMap1) {
             linhas1.removeLast();
             linhas2.removeLast();
         }

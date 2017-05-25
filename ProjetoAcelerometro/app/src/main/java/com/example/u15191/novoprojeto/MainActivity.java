@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private TextView txtUm;
     private TextView txtDois;
     private TextView txtTres;
-    private sBola bolinha;
+    private FazTudo fazTudo;
     Canvas canvas = new Canvas();
     private Paint paint = new Paint();
     private float  velX = 0;
@@ -28,8 +28,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        bolinha = new sBola(this,null,100,100);
-        setContentView(bolinha);
+        fazTudo = new FazTudo(this,null,100,100);
+        setContentView(fazTudo);
 
         sensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
         sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_GAME);
@@ -71,22 +71,22 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             velY = event.values[1];
             float z = 45;
 
-            bolinha.setXBolinha(bolinha.getXBolinha()-5*velX);
-            bolinha.setYBolinha(bolinha.getYBolinha()+5*velY);
+            fazTudo.setXBolinha(fazTudo.getXBolinha()-5*velX);
+            fazTudo.setYBolinha(fazTudo.getYBolinha()+5*velY);
 
-//            bolinha.setyInMap1(bolinha.getyInMap1() + 2);
-//            bolinha.setyFinMap1(bolinha.getyFinMap1() + 2);
-//            bolinha.setyInMap2(bolinha.getyInMap2() + 2);
-//            bolinha.setyFinMap2(bolinha.getyFinMap2() + 2);
+//            fazTudo.setyInMap1(fazTudo.getyInMap1() + 2);
+//            fazTudo.setyFinMap1(fazTudo.getyFinMap1() + 2);
+//            fazTudo.setyInMap2(fazTudo.getyInMap2() + 2);
+//            fazTudo.setyFinMap2(fazTudo.getyFinMap2() + 2);
 
-            if(bolinha.getXBolinha() > 66 && bolinha.getYBolinha() > 66 && bolinha.getXBolinha() <1011 && bolinha.getYBolinha() <1467)
+            if(fazTudo.getXBolinha() > 66 && fazTudo.getYBolinha() > 66 && fazTudo.getXBolinha() <1011 && fazTudo.getYBolinha() <1467)
             {
-                bolinha.invalidate();
+                fazTudo.invalidate();
             }
             else
             {
-                bolinha.setXBolinha(bolinha.getXBolinha()+5*velX);
-                bolinha.setYBolinha(bolinha.getYBolinha()-5*velY);
+                fazTudo.setXBolinha(fazTudo.getXBolinha()+5*velX);
+                fazTudo.setYBolinha(fazTudo.getYBolinha()-5*velY);
 
                 velX = 0;
                 velY = 0;

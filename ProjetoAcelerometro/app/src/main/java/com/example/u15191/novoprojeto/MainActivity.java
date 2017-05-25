@@ -11,6 +11,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import org.locationtech.jts.geom.Coordinate;
+
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
 
     private SensorManager sensorManager;
@@ -71,26 +73,14 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             velY = event.values[1];
             float z = 45;
 
-            fazTudo.setXBolinha(fazTudo.getXBolinha()-5*velX);
-            fazTudo.setYBolinha(fazTudo.getYBolinha()+5*velY);
+            fazTudo.translateBola((-5)*velX, 5*velY);
 
-//            fazTudo.setyInMap1(fazTudo.getyInMap1() + 2);
-//            fazTudo.setyFinMap1(fazTudo.getyFinMap1() + 2);
-//            fazTudo.setyInMap2(fazTudo.getyInMap2() + 2);
-//            fazTudo.setyFinMap2(fazTudo.getyFinMap2() + 2);
-
-            if(fazTudo.getXBolinha() > 66 && fazTudo.getYBolinha() > 66 && fazTudo.getXBolinha() <1011 && fazTudo.getYBolinha() <1467)
-            {
+            if(fazTudo.getXBola() > 66 && fazTudo.getYBola() > 66 && fazTudo.getXBola() <1011 && fazTudo.getYBola() <1467)
                 fazTudo.invalidate();
-            }
-            else
-            {
-                fazTudo.setXBolinha(fazTudo.getXBolinha()+5*velX);
-                fazTudo.setYBolinha(fazTudo.getYBolinha()-5*velY);
 
-                velX = 0;
-                velY = 0;
-            }
+            else
+                fazTudo.translateBola((5)*velX, (-5)*velY);
+
         }
     }
 

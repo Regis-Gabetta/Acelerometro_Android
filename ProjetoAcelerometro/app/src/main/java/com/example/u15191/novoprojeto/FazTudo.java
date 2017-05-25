@@ -10,6 +10,12 @@ import android.view.View;
 
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.CoordinateFilter;
+<<<<<<< HEAD
+=======
+import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.geom.GeometryFactory;
+import org.locationtech.jts.geom.LineString;
+>>>>>>> Morrrrreu
 import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.util.GeometricShapeFactory;
 
@@ -126,6 +132,7 @@ public class FazTudo extends View {
 
     private static float DELTA_Y = 30;
     private static float MAX_DELTA_X = 4 * DELTA_Y;
+    private GeometryFactory gesao;
 
 
     public static Polygon createCircle(double x, double y, final double RADIUS) {
@@ -140,6 +147,10 @@ public class FazTudo extends View {
         super(context, attrs);
         bola = createCircle(xs, ys, 65);
 
+<<<<<<< HEAD
+=======
+        gesao = new GeometryFactory();
+>>>>>>> Morrrrreu
 
         this.setxInMap1(370);
         this.setyInMap1(1700);
@@ -246,5 +257,17 @@ public class FazTudo extends View {
             c.drawLine(((float) g.x), ((float) g.y), ((float) h.x), ((float) h.y), paint2);
             g = h;
         }
+    }
+
+    public boolean isColidiu() {
+        Coordinate[] cs1 = {};
+        Coordinate[] cs2 = {};
+
+        LineString linha1 = gesao.createLineString((linhas1.toArray(cs1)));
+        LineString linha2 = gesao.createLineString((linhas1.toArray(cs1)));
+
+        return bola.intersects(linha1) ||
+                bola.intersects(linha2);
+
     }
 }

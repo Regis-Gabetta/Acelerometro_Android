@@ -9,6 +9,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
@@ -71,11 +72,12 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
             fazTudo.translateBola((-5) * velX, 5 * velY);
 
+            if (fazTudo.isColidiu())
+                Log.println(Log.INFO, "Hue", "Morrrreu");
+
 
             if (fazTudo.getXBola() > 66 && fazTudo.getYBola() > 66 && fazTudo.getXBola() < 1011 && fazTudo.getYBola() < 1467)
                 fazTudo.invalidate();
-
-
             else
                 fazTudo.translateBola((5) * velX, (-5) * velY);
 

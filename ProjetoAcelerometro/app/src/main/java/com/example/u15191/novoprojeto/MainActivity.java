@@ -71,19 +71,30 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     public void onSensorChanged(SensorEvent event) {
 
         if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
-            velX = event.values[0];
-            velY = event.values[1];
-            float z = 45;
-            fazTudo.translateBola((-5) * velX, 5 * velY);
 
             if (fazTudo.isColidiu()){
                 Toast.makeText(this, "Morreu, otário. Score \n " + fazTudo.getScore(), Toast.LENGTH_SHORT).show();
                 hue();
             }
 
+            velX = event.values[0];
+            velY = event.values[1];
 
-            if (! (fazTudo.getXBola() > 66 && fazTudo.getYBola() > 66 && fazTudo.getXBola() < 1011 && fazTudo.getYBola() < 1467))
-                fazTudo.translateBola((5) * velX, (-5) * velY);
+            fazTudo.translateBola((-5) * velX, 5 * velY);
+
+            if (! (fazTudo.getXBola() > 66 && fazTudo.getXBola() < 1011 )) {
+
+                if (! (fazTudo.getYBola() > 66 && fazTudo.getYBola() < 1467))
+                    fazTudo.translateBola((5) * velX, (-5) * velY);
+
+                else
+                    fazTudo.translateBola((5) * velX, 0);
+
+            }
+
+            else
+                if (! (fazTudo.getYBola() > 66 && fazTudo.getYBola() < 1467))
+                    fazTudo.translateBola(0, (-5) * velY);
 
             fazTudo.invalidate();
         }

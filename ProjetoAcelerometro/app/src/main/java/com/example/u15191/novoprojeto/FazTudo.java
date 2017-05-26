@@ -181,10 +181,10 @@ public class FazTudo extends View {
         linhas1 = new LinkedList<>();
         linhas2 = new LinkedList<>();
 
-        linhas1.addFirst(new Coordinate(xInMap1, yInMap1));
-        linhas2.addFirst(new Coordinate(xInMap2, yInMap2));
-        linhas1.addFirst(new Coordinate(xFinMap1, yFinMap1));
-        linhas2.addFirst(new Coordinate(xFinMap2, yFinMap2));
+        linhas1.addLast(new Coordinate(xInMap1, yInMap1));
+        linhas2.addLast(new Coordinate(xInMap2, yInMap2));
+        linhas1.addLast(new Coordinate(xFinMap1, yFinMap1));
+        linhas2.addLast(new Coordinate(xFinMap2, yFinMap2));
         this.invalidate();
 
     }
@@ -219,23 +219,25 @@ public class FazTudo extends View {
         float deltaX = random.nextInt((int) MAX_DELTA_X) - MAX_DELTA_X / 2 + 11 / MAX_DELTA_X;
 
 
-        if ((linhas1.getFirst().x + deltaX) < 66) {
+        if ((linhas1.getLast().x + deltaX) < 66) {
             deltaX = random.nextInt((int) MAX_DELTA_X) / 2;
         }
 
-        if ((linhas2.getFirst().x + deltaX) > 1010) {
+        if ((linhas2.getLast().x + deltaX) > 1010) {
             deltaX = -1 * random.nextInt((int) MAX_DELTA_X) / 2;
         }
 
-        Coordinate cn1 = new Coordinate(linhas1.getFirst().x + deltaX, linhas1.getFirst().y - DELTA_Y);
-        Coordinate cn2 = new Coordinate(linhas2.getFirst().x + deltaX, linhas2.getFirst().y - DELTA_Y);
+        Coordinate cn1 = new Coordinate(linhas1.getLast().x + deltaX, linhas1.getLast().y - DELTA_Y);
+        Coordinate cn2 = new Coordinate(linhas2.getLast().x + deltaX, linhas2.getLast().y - DELTA_Y);
 
-        linhas1.addFirst(cn1);
-        linhas2.addFirst(cn2);
+        linhas1.addLast(cn1);
+        linhas2.addLast(cn2);
 
-        if (linhas1.getFirst().y > yInMap1) {
-            linhas1.removeLast();
-            linhas2.removeLast();
+        if (linhas1.get(1).y > yInMap1) {
+            linhas1.removeFirst();
+            linhas1.removeFirst();
+            linhas2.removeFirst();
+            linhas2.removeFirst();
         }
     }
 

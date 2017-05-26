@@ -118,6 +118,8 @@ public class FazTudo extends View {
     public float yFinMap2;
     public float xFinMap2;
     private int score = 0;
+    private int velInc=100;
+    private int inc = 6;
 
     private Paint paint = new Paint();
     private Paint paint2 = new Paint();
@@ -207,14 +209,19 @@ public class FazTudo extends View {
     }
 
     private void generatePoints() {
+        if(score > velInc)
+        {
+            inc++;
+            velInc+=100;
+        }
         for (Coordinate g :
                 linhas1) {
-            g.y += 6;
+            g.y += inc;
         }
 
         for (Coordinate g :
                 linhas2) {
-            g.y += 6;
+            g.y += inc;
         }
 
         float deltaX = random.nextInt((int) MAX_DELTA_X) - MAX_DELTA_X / 2 + 11 / MAX_DELTA_X;

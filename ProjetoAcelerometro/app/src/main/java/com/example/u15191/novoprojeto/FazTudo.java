@@ -10,7 +10,6 @@ import android.view.View;
 
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.CoordinateFilter;
-import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.Polygon;
@@ -232,8 +231,17 @@ public class FazTudo extends View {
         Coordinate cn1 = new Coordinate(linhas1.getLast().x + deltaX, linhas1.getLast().y - DELTA_Y);
         Coordinate cn2 = new Coordinate(linhas2.getLast().x + deltaX, linhas2.getLast().y - DELTA_Y);
 
-        linhas1.addLast(cn1);
-        linhas2.addLast(cn2);
+        if(cn1.y > -50)
+        {
+            linhas1.addLast(cn1);
+        }
+
+        if(cn2.y > -50)
+        {
+            linhas2.addLast(cn2);
+        }
+
+
 
         if (linhas1.get(1).y > yInMap1) {
             linhas1.removeFirst();

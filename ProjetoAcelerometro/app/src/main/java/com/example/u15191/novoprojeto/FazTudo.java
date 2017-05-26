@@ -147,18 +147,18 @@ public class FazTudo extends View {
 
     public FazTudo(Context context, AttributeSet attrs, float xs, float ys) {
         super(context, attrs);
-        bola = createCircle(xs, ys, 80);
+        bola = createCircle(xs, ys, 65);
 
         gesao = new GeometryFactory();
 
         this.setxInMap1(370);
         this.setyInMap1(1700);
         this.setxFinMap1(370);
-        this.setyFinMap1(-200);
+        this.setyFinMap1(-500);
         this.setxInMap2(720);
         this.setyInMap2(1700);
         this.setxFinMap2(720);
-        this.setyFinMap2(-200);
+        this.setyFinMap2(-500);
 
 
         paint.setAntiAlias(true);
@@ -186,8 +186,24 @@ public class FazTudo extends View {
 
         linhas1.addLast(new Coordinate(xInMap1, yInMap1));
         linhas2.addLast(new Coordinate(xInMap2, yInMap2));
-        linhas1.addLast(new Coordinate(xFinMap1, yFinMap1));
-        linhas2.addLast(new Coordinate(xFinMap2, yFinMap2));
+
+        for(float f =yInMap1 + 80;f>yFinMap1;f-=80)
+        {
+            xInMap1+=60;
+            linhas1.addLast(new Coordinate(xInMap1, f));
+            f-= 80;
+            xInMap1 -= 60;
+            linhas1.addLast(new Coordinate(xInMap1, f));
+        }
+
+        for(float f =yInMap2 + 80;f>yFinMap2;f-=80) {
+            xInMap2 += 60;
+            linhas2.addLast(new Coordinate(xInMap2, f));
+            f -= 80;
+            xInMap2 -= 60;
+            linhas2.addLast(new Coordinate(xInMap2, f));
+        }
+
         this.invalidate();
 
     }
@@ -204,6 +220,7 @@ public class FazTudo extends View {
                 65, paint);
         score ++;
         canvas.drawText("Score: " + score, 750, 100, paint3);
+        canvas.drawText("x: "+this.getXBola() + " y: " + this.getYBola(),100,100,paint);
         generatePoints();
         desenharLinha(canvas);
     }

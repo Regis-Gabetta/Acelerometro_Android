@@ -147,7 +147,7 @@ public class FazTudo extends View {
 
     public FazTudo(Context context, AttributeSet attrs, float xs, float ys) {
         super(context, attrs);
-        bola = createCircle(xs, ys, 65);
+        bola = createCircle(xs, ys, 80);
 
         gesao = new GeometryFactory();
 

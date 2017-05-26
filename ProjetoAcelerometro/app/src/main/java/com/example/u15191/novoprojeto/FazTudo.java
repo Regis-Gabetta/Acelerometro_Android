@@ -137,7 +137,7 @@ public class FazTudo extends View {
 
     public static Polygon createCircle(double x, double y, final double RADIUS) {
         GeometricShapeFactory shapeFactory = new GeometricShapeFactory();
-        shapeFactory.setNumPoints(32);
+        shapeFactory.setNumPoints(100);
         shapeFactory.setCentre(new Coordinate(x, y));
         shapeFactory.setSize(RADIUS * 2);
         return shapeFactory.createCircle();
@@ -282,8 +282,9 @@ public class FazTudo extends View {
         LineString linha1 = gesao.createLineString((linhas1.toArray(cs1)));
         LineString linha2 = gesao.createLineString((linhas2.toArray(cs2)));
 
-        return bola.intersects(linha1) ||
-                bola.intersects(linha2);
+        boolean b =  bola.intersects(linha1) ||
+                        bola.intersects(linha2);
 
+        return  b;
     }
 }

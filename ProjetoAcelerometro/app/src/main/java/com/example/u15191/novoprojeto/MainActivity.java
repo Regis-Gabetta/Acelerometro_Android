@@ -77,16 +77,15 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             fazTudo.translateBola((-5) * velX, 5 * velY);
 
             if (fazTudo.isColidiu()){
-                Toast.makeText(this, "Morreu, otário. Score \n " + fazTudo.getScore(), Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Morreu, otário. Score \n " + fazTudo.getScore(), Toast.LENGTH_SHORT).show();
                 hue();
             }
 
 
-            if (fazTudo.getXBola() > 66 && fazTudo.getYBola() > 66 && fazTudo.getXBola() < 1011 && fazTudo.getYBola() < 1467)
-                fazTudo.invalidate();
-            else
+            if (! (fazTudo.getXBola() > 66 && fazTudo.getYBola() > 66 && fazTudo.getXBola() < 1011 && fazTudo.getYBola() < 1467))
                 fazTudo.translateBola((5) * velX, (-5) * velY);
 
+            fazTudo.invalidate();
         }
     }
 

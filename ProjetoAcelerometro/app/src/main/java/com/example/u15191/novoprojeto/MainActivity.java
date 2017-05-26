@@ -8,9 +8,11 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
 
@@ -29,7 +31,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        hue();
+    }
 
+    public void hue(){
         fazTudo = new FazTudo(this, null, 540, 1200);
         setContentView(fazTudo);
 
@@ -71,8 +76,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             float z = 45;
             fazTudo.translateBola((-5) * velX, 5 * velY);
 
-            if (fazTudo.isColidiu())
-                Log.println(Log.INFO, "Hue", "Morrrreu");
+            if (fazTudo.isColidiu()){
+                Toast.makeText(this, "Morreu, otário. Score \n " + fazTudo.getScore(), Toast.LENGTH_LONG).show();
+                hue();
+            }
 
 
             if (fazTudo.getXBola() > 66 && fazTudo.getYBola() > 66 && fazTudo.getXBola() < 1011 && fazTudo.getYBola() < 1467)

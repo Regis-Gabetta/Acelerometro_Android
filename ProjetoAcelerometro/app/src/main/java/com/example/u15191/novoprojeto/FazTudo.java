@@ -108,6 +108,8 @@ public class FazTudo extends View {
         return bola.getCentroid().getY();
     }
 
+    public int getScore(){ return score; }
+
     public float xInMap1;
     public float yInMap1;
     public float yFinMap1;
@@ -270,7 +272,7 @@ public class FazTudo extends View {
         Coordinate[] cs2 = {};
 
         LineString linha1 = gesao.createLineString((linhas1.toArray(cs1)));
-        LineString linha2 = gesao.createLineString((linhas1.toArray(cs1)));
+        LineString linha2 = gesao.createLineString((linhas2.toArray(cs2)));
 
         return bola.intersects(linha1) ||
                 bola.intersects(linha2);

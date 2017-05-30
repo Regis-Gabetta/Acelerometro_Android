@@ -8,9 +8,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
-import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -73,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
 
             if (fazTudo.isColidiu()){
-                Toast.makeText(this, "Morreu, otário. Score \n " + fazTudo.getScore(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Você Morreu !!\n Score :  " + fazTudo.getScore(), Toast.LENGTH_SHORT).show();
                 hue();
             }
 

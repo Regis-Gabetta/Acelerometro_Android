@@ -251,7 +251,9 @@ public class FazTudo extends View {
         if(score > velInc)
         {
             inc++;
-            velInc+=100;
+
+            if(score<2000)
+                velInc+=100;
         }
         for (Coordinate g :
                 linhas1) {

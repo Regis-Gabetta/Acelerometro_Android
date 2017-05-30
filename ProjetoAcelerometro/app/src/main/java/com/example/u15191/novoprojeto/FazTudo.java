@@ -130,6 +130,8 @@ public class FazTudo extends View {
 
     private LinkedList<Coordinate> linhas1;
     private LinkedList<Coordinate> linhas2;
+    private LinkedList<Coordinate> linhas3;
+    private LinkedList<Coordinate> linhas4;
     private Polygon bola;
 
     private static float DELTA_Y = 30;
@@ -155,9 +157,9 @@ public class FazTudo extends View {
         this.setyInMap1(1700);
         this.setxFinMap1(370);
         this.setyFinMap1(-500);
-        this.setxInMap2(720);
+        this.setxInMap2(800);
         this.setyInMap2(1700);
-        this.setxFinMap2(720);
+        this.setxFinMap2(800);
         this.setyFinMap2(-500);
 
 
@@ -183,26 +185,46 @@ public class FazTudo extends View {
 
         linhas1 = new LinkedList<>();
         linhas2 = new LinkedList<>();
+        linhas3 = new LinkedList<>();
+        linhas4 = new LinkedList<>();
+
+
+        xInMap1 = 66;
+        xInMap2 = 900;
 
         linhas1.addLast(new Coordinate(xInMap1, yInMap1));
         linhas2.addLast(new Coordinate(xInMap2, yInMap2));
+        linhas3.addLast(new Coordinate(xInMap1 + 90, yInMap1));
+        linhas4.addLast(new Coordinate(xInMap2 + 90, yInMap2));
 
-        for(float f =yInMap1 + 80;f>yFinMap1;f-=80)
+        float f1 = yInMap1 + 80;
+        float f2 = yInMap2 + 80;
+
+        for(;f1>yFinMap1;f1-=80)
         {
-            xInMap1+=60;
-            linhas1.addLast(new Coordinate(xInMap1, f));
-            f-= 80;
-            xInMap1 -= 60;
-            linhas1.addLast(new Coordinate(xInMap1, f));
+            xInMap1+=90;
+            linhas1.addLast(new Coordinate(xInMap1, f1));
+            linhas3.addLast(new Coordinate(xInMap1-90,f1));
+            f1-= 80;
+            xInMap1 -= 90;
+            linhas1.addLast(new Coordinate(xInMap1, f1));
+            linhas3.addLast(new Coordinate(xInMap1+90,f1));
         }
 
-        for(float f =yInMap2 + 80;f>yFinMap2;f-=80) {
-            xInMap2 += 60;
-            linhas2.addLast(new Coordinate(xInMap2, f));
-            f -= 80;
-            xInMap2 -= 60;
-            linhas2.addLast(new Coordinate(xInMap2, f));
+        for(;f2>yFinMap2;f2-=80) {
+            xInMap2 += 90;
+            linhas2.addLast(new Coordinate(xInMap2, f2));
+            linhas4.addLast(new Coordinate(xInMap2-90,f2));
+            f2 -= 80;
+            xInMap2 -= 90;
+            linhas2.addLast(new Coordinate(xInMap2, f2));
+            linhas4.addLast(new Coordinate(xInMap2+90,f2));
         }
+
+        linhas1.addLast(new Coordinate(363, f1 - 50));
+        linhas3.addLast(new Coordinate(363, f1 - 50));
+        linhas2.addLast(new Coordinate(727, f2 - 50));
+        linhas4.addLast(new Coordinate(727, f2 - 50));
 
         this.invalidate();
 
@@ -220,7 +242,7 @@ public class FazTudo extends View {
                 65, paint);
         score ++;
         canvas.drawText("Score: " + score, 750, 100, paint3);
-        canvas.drawText("x: "+this.getXBola() + " y: " + this.getYBola(),100,100,paint);
+//        canvas.drawText("x: "+this.getXBola() + " y: " + this.getYBola(),100,100,paint);
         generatePoints();
         desenharLinha(canvas);
     }
@@ -235,11 +257,23 @@ public class FazTudo extends View {
                 linhas1) {
             g.y += inc;
         }
-
         for (Coordinate g :
                 linhas2) {
             g.y += inc;
         }
+        if(linhas3.getFirst() != null)
+        {
+            for (Coordinate g :
+                    linhas3) {
+                g.y += inc;
+            }
+
+            for (Coordinate g :
+                    linhas4) {
+                g.y += inc;
+            }
+        }
+
 
         float deltaX = random.nextInt((int) MAX_DELTA_X) - MAX_DELTA_X / 2 + 11 / MAX_DELTA_X;
 
@@ -297,6 +331,35 @@ public class FazTudo extends View {
             c.drawLine(((float) g.x), ((float) g.y), ((float) h.x), ((float) h.y), paint2);
             g = h;
         }
+
+        if(linhas3.getFirst() != null)
+        {
+            g = null;
+            for (Coordinate h :
+                    linhas3) {
+                if (g == null) {
+                    g = h;
+                    continue;
+                }
+                c.drawLine(((float) g.x), ((float) g.y), ((float) h.x), ((float) h.y), paint2);
+                g = h;
+            }
+        }
+
+        if(linhas4.getFirst() != null)
+        {
+            g = null;
+            for (Coordinate h :
+                    linhas4) {
+                if (g == null) {
+                    g = h;
+                    continue;
+                }
+                c.drawLine(((float) g.x), ((float) g.y), ((float) h.x), ((float) h.y), paint2);
+                g = h;
+            }
+        }
+
     }
 
     public boolean isColidiu() {
@@ -305,9 +368,13 @@ public class FazTudo extends View {
 
         LineString linha1 = gesao.createLineString((linhas1.toArray(cs1)));
         LineString linha2 = gesao.createLineString((linhas2.toArray(cs2)));
+        LineString linha3 = gesao.createLineString((linhas1.toArray(cs1)));
+        LineString linha4 = gesao.createLineString((linhas2.toArray(cs2)));
 
         boolean b =  bola.intersects(linha1) ||
-                        bola.intersects(linha2);
+                        bola.intersects(linha2) ||
+                bola.intersects(linha3) ||
+        bola.intersects(linha4);
 
         return  b;
     }
